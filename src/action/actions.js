@@ -6,6 +6,9 @@ export const increaseCounter = () => {
     return {
 
         type: INCREMENT,
+        payload: {
+            like: 'haidaodz'
+        }
 
     };
 
