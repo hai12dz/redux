@@ -12,7 +12,6 @@ import {
 import store from './redux/store';
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux";
-import { use, useEffect } from 'react';
 
 function App(props) {
 
@@ -27,14 +26,7 @@ function App(props) {
 
   }
 
-  const fetchAllUser = async () => {
-    const res = await axios.get('http://localhost:8080/users/all');
-    console.log(res.data);
-  }
 
-  useEffect(() => {
-    fetchAllUser();
-  }, [])
   return (
     //   <div className="App">
     //     <header className="App-header">
