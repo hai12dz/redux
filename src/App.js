@@ -17,7 +17,6 @@ function App(props) {
 
   const newCount = useSelector(state => state.counter.count);
   const dispatch = useDispatch();
-
   const handleIncrease = () => {
 
     dispatch(increaseCounter());
