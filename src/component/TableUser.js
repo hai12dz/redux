@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllUsers } from '../action/actions';
-
+import { deleteUserRedux } from '../action/actions';
 const TableUser = (props) => {
     // const [listUser, setListUser] = useState([]);
 
@@ -22,10 +22,7 @@ const TableUser = (props) => {
     const dispatch = useDispatch();
 
     const handleDeleteUser = async (id) => {
-        const res = await axios.post(`http://localhost:8080/users/delete/${id}`);
-        if (res && res.data) {
-            fetchAllUsers();
-        }
+        dispatch(deleteUserRedux(id));
     }
     useEffect(() => {
         // fetchAllUser();
