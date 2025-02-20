@@ -16,6 +16,8 @@ const TableUser = (props) => {
     //     setListUser(data);
     // }
     const listUser = useSelector(state => state.user.listUser);
+    const isLoading = useSelector(state => state.user.isLoading);
+    const isError = useSelector(state => state.user.isError);
 
     const dispatch = useDispatch();
 
@@ -30,8 +32,71 @@ const TableUser = (props) => {
         dispatch(fetchAllUsers());
 
     }, []);
-    return (
-        <>
+
+    if (isError === false && isLoading === false) {
+
+        return (
+            <>
+                <Container>
+                    <hr />
+
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {isError === true ?
+                                <><div>error try again</div></>
+                                :
+
+                                <>
+
+                                    {isLoading === true ?
+                                        <><div>Loading...</div></>
+                                        :
+                                        <>
+                                            {listUser && listUser.length > 0 && listUser.map((item, index) => {
+                                                return (
+                                                    <tr key={`user-${index}`}>
+                                                        <td>{index + 1}</td>
+                                                        <td>{item.email}</td>
+
+                                                        <td>{item.username}</td>
+                                                        <td>
+                                                            <button className="btn btn-danger"
+                                                                onClick={() => {
+                                                                    handleDeleteUser(item.id);
+                                                                }}
+                                                            >Delete</button>
+                                                            <button className="btn btn-primary">Edit</button>
+
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </>
+                                    }
+                                </>
+                            }
+
+
+
+                        </tbody>
+                    </Table>
+                </Container>
+            </>
+        )
+
+    }
+
+    if (isError === true && isLoading === false) {
+
+        return (
             <Container>
                 <hr />
 
@@ -43,34 +108,49 @@ const TableUser = (props) => {
                             <th>Username</th>
                             <th>Action</th>
                         </tr>
+
                     </thead>
                     <tbody>
-                        {listUser && listUser.length > 0 && listUser.map((item, index) => {
-                            return (
-                                <tr key={`user-${index}`}>
-                                    <td>{index + 1}</td>
-                                    <td>{item.email}</td>
-
-                                    <td>{item.username}</td>
-                                    <td>
-                                        <button className="btn btn-danger"
-                                            onClick={() => {
-                                                handleDeleteUser(item.id);
-                                            }}
-                                        >Delete</button>
-                                        <button className="btn btn-primary">Edit</button>
-
-                                    </td>
-                                </tr>
-                            );
-                        })}
-
-
+                        error try again
                     </tbody>
                 </Table>
             </Container>
-        </>
+        );
+
+    }
+
+    if (isError === false && isLoading === true) {
+
+        return (
+            <Container>
+                <hr />
+
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        Loading...
+                    </tbody>
+                </Table>
+            </Container>
+        );
+
+    }
+
+
+
+    return (
+
+        <></>
     )
+
 
 }
 export default TableUser;
