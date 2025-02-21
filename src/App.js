@@ -4,27 +4,55 @@ import { useSelector, useDispatch } from 'react-redux'
 import { use, useEffect } from 'react';
 import { increment, decrement } from './redux/slices/counterSlice'
 import axios from 'axios';
-
+import { fetchAllUsers } from './redux/slices/userSlice';
 import { useState } from 'react';
 
 function App() {
   const dispatch = useDispatch();
-  const count = useSelector(state => state.counter.value);
-  const [listUser, setListUser] = useState([]);
+  //const count = useSelector(state => state.counter.value);
+  // const [listUser, setListUser] = useState([]);
 
 
-  const fetchAllUsers = async () => {
+  // const fetchAllUsers = async () => {
 
-    let res = await axios.get('http://localhost:8080/users/all');
-    setListUser(res.data ? res.data : []);
-    console.log(res.data);
+  //   let res = await axios.get('http://localhost:8080/users/all');
+  //   setListUser(res.data ? res.data : []);
+  //   console.log(res.data);
+
+  // }
+
+  const listUser = useSelector(state => state.user.listUser);
+  const isError = useSelector(state => state.user.listUser);
+  const isLoading = useSelector(state => state.user.listUser);
+
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+  }, [])
+
+  if (isError === true && isLoading === false) {
+
+    return (
+
+      <div>
+        <h1>Something went wrong!</h1>
+      </div>
+    )
+
 
   }
 
+  if (isError === false && isLoading === true) {
 
-  useEffect(() => {
-    fetchAllUsers();
-  }, [])
+    return (
+
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    )
+
+
+  }
+
 
   return (
     <div className="App">
