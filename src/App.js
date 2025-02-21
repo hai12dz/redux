@@ -37,23 +37,14 @@ function App() {
         <h1>Something went wrong!</h1>
       </div>
     )
-
-
   }
-
   if (isError === false && isLoading === true) {
-
     return (
-
       <div>
         <h1>Loading...</h1>
       </div>
     )
-
-
   }
-
-
   return (
     <div className="App">
       <header className="App-header">
